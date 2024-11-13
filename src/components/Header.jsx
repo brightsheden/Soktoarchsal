@@ -14,7 +14,7 @@ function Header() {
                 height:"20px"
             }}/>
             <span className='text-xs'>
-            +2347064857695
+            +23470-222-222
             </span>
             
         </span>
@@ -26,7 +26,7 @@ function Header() {
             }} size={10} className='w-10 h-10 text-sm'/>
 
 <span className='text-xs'>
-shedenbright@gmail.com
+acrsalsokoto@gmail.com
             </span>
            
         </span>

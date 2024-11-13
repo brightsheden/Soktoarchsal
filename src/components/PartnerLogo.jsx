@@ -25,7 +25,7 @@ function PartnerLogo() {
           }}
         >
           <div className="w-40 flex-shrink-0">
-          <img className='size-40' src='nigeria.png'/>
+          <img className='w-full' src='nigeria.png'/>
           </div>
           <div className="w-40 flex-shrink-0">
           <img className='w-full' src='sokotogovehouse.jpg'/>
@@ -38,7 +38,7 @@ function PartnerLogo() {
           </div>
 
           <div className="w-40 flex-shrink-0">
-          <img className='size-40' src='nigeria.png'/>
+          <img className='w-full' src='nigeria.png'/>
           </div>
           <div className="w-40 flex-shrink-0">
           <img className='w-full' src='sokotogovehouse.jpg'/>
@@ -50,8 +50,8 @@ function PartnerLogo() {
           <img className='w-full' src='wordbanklogo.png'/>
           </div>
 
-          <div className="w-40 flex-shrink-0">
-          <img className='size-40' src='nigeria.png'/>
+        <div className="w-40 flex-shrink-0">
+          <img className='w-full' src='nigeria.png'/>
           </div>
           <div className="w-40 flex-shrink-0">
           <img className='w-full' src='sokotogovehouse.jpg'/>
