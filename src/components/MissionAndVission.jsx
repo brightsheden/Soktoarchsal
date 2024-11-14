@@ -2,7 +2,7 @@ import React from 'react'
 
 function MissionAndVission() {
   return (
-    <div className='flex justify-between flex-col md:flex-row container p-4 gap-4'>
+    <div className='flex justify-between flex-col md:flex-row container p-4 gap-4 motion-preset-slide-right'>
         <div>
             <h2 className='font-bold text-blue-800 text-2xl '>Our Mission</h2>
             <span className='text-sm text-gray-500 font-bold'>Cultivating Sustainability, Empowering Communities</span>

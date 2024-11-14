@@ -30,7 +30,7 @@ function AboutUs() {
           >
             <div className="bg-white  p-6">
               <motion.p 
-                className="text-lg md:text-xl text-gray-700 mb-6"
+                className="text-lg md:text-xl text-gray-700 mb-6 text-center"
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : {}}
                 transition={{ delay: 0.4, duration: 0.8 }}

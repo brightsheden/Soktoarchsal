@@ -11,7 +11,7 @@ export default () => {
         modules={[Navigation, Pagination]}
         spaceBetween={50}
         slidesPerView="auto"
-        navigation
+    
         pagination={{ clickable: true }}
         autoplay={true}
         breakpoints={{

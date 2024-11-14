@@ -27,12 +27,12 @@ function Hero() {
         backgroundBlendMode: 'multiply',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
       }}
-      className="min-h-screen flex items-center pt-8 pb-0"
+      className="min-h-screen flex items-center pt-8 pb-0 motion-preset-slide-right "
     >
       <div className="text-center text-white w-full">
         <div className="text-[30px] md:text-[50px] font-bold ">{welcomeText}</div>
         <div>
-          <p className="my-5 text-sm">
+          <p className="my-5 text-sm motion-preset-typewriter ">
             Together, we're transforming Sokoto's landscapes to secure a sustainable future. Through the ACReSAL Project, we're
             restoring over 50,000 hectares, promoting sustainable land management, and helping vulnerable communities thrive in
             harmony with the environment. Join us on this journey to resilience.
