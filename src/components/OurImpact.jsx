@@ -2,7 +2,7 @@ import React from 'react'
 
 function OurImpact() {
   return (
-    <div className='bg-white container my-8'>
+    <div name='impact' className='bg-white container my-8'>
         <div className='text-center my-4'>
             <h2 className='text-2xl md:text-[50px] font-bold text-blue-700'>Our Impact</h2>
             <span  className='text-blue-700 font-semibold'> Transforming Land, Transforming Lives </span>

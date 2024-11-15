@@ -7,38 +7,17 @@ import {
   ButtonGroup,
 } from "@material-tailwind/react";
 import { FaHome, FaList, FaMoneyBill, FaNewspaper, FaSignOutAlt, FaSuitcase, FaUser, FaUsers, FaVideo, FaYoutube } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { UserStore } from "../state/store";
+//import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-scroll";
 
 
  
-export function DrawerPlacement({openRight, closeDrawerRight}) {
+export function DrawerPlacement({openRight, closeDrawerRight}) { 
 
-  const userInfo = UserStore.useState(state => state?.user?.token)
-
-
-  const logoutHandler = () => {
-    UserStore.update(s => {
-      s.user = null,
-      s.isLoggedIn=false
-    })
-    localStorage.removeItem('userInfo');
-   
-  };
-const navaigate = useNavigate()
-  useEffect(()=>{
-    if(!userInfo){
-      navaigate('/login')
-
-    }
-
-  },[userInfo])
-
-  
-
-
-
- 
+    // Function to handle the activation of a link.
+    const handleSetActive = (to) => {
+      console.log(to);
+    };
   return (
     <React.Fragment>
       <div className="flex flex-wrap gap-4">
@@ -51,14 +30,16 @@ const navaigate = useNavigate()
         onClose={closeDrawerRight}
         className="text-white bg-white"
       >
-        <div className="flex flex-col px-2 py-6 h-screen bg-[rgba(0,0,0,0.7)] backdrop-blur-3xl">
-        <div className="flex justify-between items-center mb-12">
-          <Typography variant="h5" color="white">
-           AirSpaceRecord
+        <div className="flex flex-col px-2 py-6 bg-white text-blue-700 backdrop-blur-3xl">
+
+
+        <div className="flex justify-between items-center mb-2 ">
+          <Typography variant="h5" className="text-blue-700">
+           Sokoto Acresal
           </Typography>
           <IconButton
             variant="text"
-            color="white"
+            className="text-blue-700"
             onClick={closeDrawerRight}
           >
             <svg
@@ -78,6 +59,10 @@ const navaigate = useNavigate()
           </IconButton>
 
         </div>
+          <div className="flex justify-center my-2">
+            <img src='acresal-logo.png'/>
+          </div>
+      
           <div className="">
           <ul className="">
             <Link to={'/'}>
@@ -90,55 +75,66 @@ const navaigate = useNavigate()
 
             </Link>
 
+            <Link 
+            onClick={closeDrawerRight}
+            activeClass="active" 
+            to="about" 
+            spy={true} 
+            smooth={true} 
+            offset={50} 
+            duration={500} 
+            onSetActive={handleSetActive}>
+            <li className="nav-link">
+              
+
+              <span>About Us</span>
+              
+             </li>
+
+            </Link>
+
+            <Link 
+              onClick={closeDrawerRight}
+              activeClass="active" 
+              to="mission" 
+              spy={true} 
+              smooth={true} 
+              offset={50} 
+              duration={500} 
+              onSetActive={handleSetActive}>
+            <li className="nav-link">
+              
+
+              <span>Our Mission</span>
+              
+             </li>
+
+            </Link>
+
+            <Link 
+              onClick={closeDrawerRight}
+              activeClass="active" 
+              to="impact" 
+              spy={true} 
+              smooth={true} 
+              offset={50} 
+              duration={500} 
+              onSetActive={handleSetActive}>
+            <li className="nav-link">
+              
+
+              <span>Our Impact</span>
+              
+             </li>
+
+            </Link>
+
+
+
+
+
   
         
-            <div>
-            {userInfo?(
-              <div className="space-y-4">
-
-
-              <div className="flex items-center gap-2 nav-link">
-                <FaList/>
-                <Link to={'/adminrecords'}>
-                  Manage Records
-                </Link>
-              </div>
-
-
-              <button className="flex items-center gap-2 nav-link" onClick={logoutHandler}>
-                <FaSignOutAlt/>
-              
-                  Logout
-           
-              </button>
-              </div>
-             
-             
-            ): (
-
-              <div className="flex my-5 flex-col w-full justify-between gap-4"
-              >
-                 <Link to={'/login'}>
-              <Button className='bg-black p-2  btn-primary rounded-full w-40 text-white shadow-sm'>
-                
-               
-                Login
-                </Button>
-                </Link>
-                <Link to={'/register'}>
-              <Button className=' bg-primary w-40 rounded-full text-white hover:bg-black'>
-                
-             
-              Register
-               </Button>
-               </Link>
-                </div>
-
-            )}
-            
-           
-            
-            </div>
            
           </ul>
          

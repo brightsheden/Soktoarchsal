@@ -1,4 +1,5 @@
 import React from 'react'
+import MapboxMap from './Map'
 
 function WhereWeLocate() {
   return (
@@ -7,7 +8,7 @@ function WhereWeLocate() {
             <h1 className="font-bold text-2xl md:text-5xl text-center  text-blue-700">Where We Locate</h1>
         </div>
         <div>
-            <img className='w-[100%] h-[50%]' src='/images/Ngs.png'/>
+           <MapboxMap/>
         </div>
       
     </div>

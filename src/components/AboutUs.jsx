@@ -1,13 +1,15 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Element } from 'react-scroll';
 
 function AboutUs() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <div id='about' ref={ref} className=" py-16 md:py-24 lg:py-32">
+
+    <div name='about' id='about' ref={ref} className="element py-16 md:py-24 lg:py-32">
       <div className="container mx-auto px-4">
         <motion.h2 
           className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12 text-center text-blue-800"

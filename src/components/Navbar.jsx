@@ -1,7 +1,13 @@
 import { Menu } from 'lucide-react'
 import React from 'react'
+import { DrawerPlacement } from './Drawer';
 
 function Navbar() {
+  const [openRight, setOpenRight] = React.useState(false);
+
+ 
+  const openDrawerRight = () => setOpenRight(true);
+  const closeDrawerRight = () => setOpenRight(false);
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light flex justify-between">
@@ -32,8 +38,13 @@ function Navbar() {
        </div>
 
        <div className='block md:hidden'>
-        <Menu/>
+        
+        <Menu onClick={openDrawerRight} />
        </div>
+
+       <div className={openRight ? '' : 'hidden'}>
+    <DrawerPlacement openDrawerRight={openDrawerRight} openRight={openRight} closeDrawerRight={closeDrawerRight}/>
+</div>
     
 
       </nav>
