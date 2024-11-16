@@ -1,5 +1,6 @@
 import React from 'react'
 import MapboxMap from './Map'
+import LeafletMap from './LeafletMap'
 
 function WhereWeLocate() {
   return (
@@ -8,7 +9,7 @@ function WhereWeLocate() {
             <h1 className="font-bold text-2xl md:text-5xl text-center  text-blue-700">Where We Locate</h1>
         </div>
         <div>
-           <MapboxMap/>
+           <LeafletMap/>
         </div>
       
     </div>
