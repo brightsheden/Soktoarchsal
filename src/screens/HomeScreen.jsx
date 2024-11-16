@@ -17,8 +17,36 @@ import Partners from '../components/Partners'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
+import PhotoGallery from '../components/Gallery'
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer'
+
+
 
 function HomeScreen() {
+
+const { ref: ref1, inView: inView1 } = useInView();
+const controls1 = useAnimation();
+
+
+const variants = {
+  hidden: { opacity: 0, x: '-100vw' },
+  visible: { opacity: 1, x: 0 },
+  exit: { opacity: 0 }
+};
+
+if (window.innerWidth > 768) {
+  variants.hidden.x = '-50vw';
+}
+
+React.useEffect(() => {
+  if (inView1) {
+    controls1.start('visible');
+  } else {
+    controls1.start('hidden');
+  }
+}, [controls1, inView1]);
+
 
 
   useEffect(() => {
@@ -56,12 +84,20 @@ function HomeScreen() {
     <SwiperSlide/>
    <WhereWeLocate/>
    <MovingBubbles/>
-   <AcreSalComponent/>
+   <motion.div
+             ref={ref1}
+             initial="hidden"
+             animate={controls1}
+             variants={variants}
+             transition={{ duration: 1.5 }}
+    >
+ <AcreSalComponent/>
+
+    </motion.div>
+  
    <MovingBubbles/>
    <AcresalCountDown/>
-  
-   <ImprovingLiveHood/>
-   <SwiperSlide/>
+   <PhotoGallery/>
    <Partners/>
    <Footer/>
     </div>

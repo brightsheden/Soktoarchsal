@@ -3,7 +3,7 @@ import CountUp from 'react-countup'
 
 function AcresalCountDown() {
   return (
-    <div className='min-h-screen my-5 p-5'>
+    <div className='  p-5'>
    {/*  <div>
         <h2 className='text-2xl text-blue-700'>Acresal Stats</h2>
      </div> */}

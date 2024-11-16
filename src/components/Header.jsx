@@ -14,7 +14,7 @@ function Header() {
                 height:"20px"
             }}/>
             <span className='text-xs'>
-            +23470-222-222
+            +234-8098049358
             </span>
             
         </span>
@@ -25,22 +25,33 @@ function Header() {
                 height:"20px"
             }} size={10} className='w-10 h-10 text-sm'/>
 
-<span className='text-xs'>
-acrsalsokoto@gmail.com
-            </span>
+<a href='mailto:sokotoacresal@gmail.com' className='text-xs'>
+sokotoacresal@gmail.com
+            </a>
            
         </span>
 
       </div>
 
       <div className='hidden md:flex items-center justify-between gap-4'>
-        <button className='p-2 bg-white rounded-md text-[10px] '>
+        <a href='mailto:mailto:sokotoacresal@gmail.com' className='p-2 bg-white rounded-md text-[10px] '>
             Email Us
-        </button>
+        </a>
         <div className='text-white flex justify-between gap-4 text-xl'>
+         
+        <a href='https://web.facebook.com/profile.php?id=100084274891426' target="_blank">
         <MdFacebook className='size-6'/>
+          </a>
+        
+        <a href='https://www.instagram.com/sokoto_acresal/' target="_blank">
         <FaInstagram className='size-6' />
-        <FaTwitter className='size-6'/>
+          </a>
+
+          <a href='https://x.com/AcresalSokoto' target="_blank">
+          <FaTwitter className='size-6'/>
+          </a>
+        
+       
 
 
         </div>

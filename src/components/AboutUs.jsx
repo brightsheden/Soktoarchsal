@@ -32,12 +32,15 @@ function AboutUs() {
           >
             <div className="bg-white  p-6">
               <motion.p 
-                className="text-lg md:text-xl text-gray-700 mb-6 text-center"
+                className="text-lg md:text-xl text-gray-700 mb-6 text-left"
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : {}}
                 transition={{ delay: 0.4, duration: 0.8 }}
               >
-                The Agro-Climatic Resilience in Semi-Arid Landscapes (ACReSAL) Project, Sokoto SPMU, is a pioneering initiative dedicated to revitalizing our landscapes and uplifting our communities. With a mission rooted in sustainable landscape management, ACReSAL Sokoto plays a key role in the nationwide goal of restoring four million hectares by 2030. By rehabilitating over 50,000 hectares of degraded land, we’re not only boosting productivity but are also paving the way for environmental sustainability and improved livelihoods.
+                The Agro-Climatic Resilience in Semi-Arid Landscapes (ACReSAL) Project, Sokoto SPMU, is a pioneering initiative dedicated to revitalizing our landscapes and uplifting our communities. With a mission rooted in sustainable landscape management, 
+                
+                <br></br>ACReSAL Sokoto plays a key role in the nationwide goal of restoring four million hectares by 2030. By rehabilitating over 50,000 hectares of degraded land, we’re not only boosting productivity but are also paving the way for environmental sustainability and improved livelihoods.
+
 
 
               </motion.p>

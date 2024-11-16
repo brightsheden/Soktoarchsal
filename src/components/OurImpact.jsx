@@ -4,16 +4,15 @@ function OurImpact() {
   return (
     <div name='impact' className='bg-white container my-8'>
         <div className='text-center my-4'>
-            <h2 className='text-2xl md:text-[50px] font-bold text-blue-700'>Our Impact</h2>
-            <span  className='text-blue-700 font-semibold'> Transforming Land, Transforming Lives </span>
+            <h2 className='text-2xl md:text-[50px] font-bold text-blue-700 mb-5'>Our Impact</h2>
+            <span  className='text-blue-700 font-semibold '> Transforming Land, Transforming Lives </span>
         </div>
 
 {/* card container */}
         <div className='flex flex-col md:flex-row gap-5 p-4 '>
         <div
-                className="mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200"
+                className="mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200 hover:motion-preset-pop "
               
-            
               >
                 <img
                   className="w-full max-h-48 object-cover mb-4"
@@ -26,7 +25,7 @@ function OurImpact() {
               </div>
 
               <div
-                className="mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200"
+                className="mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200 hover:motion-preset-pop "
               
             
               >
@@ -41,7 +40,7 @@ function OurImpact() {
               </div>
 
               <div
-                className="mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200"
+                className="mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200 hover:motion-preset-pop "
               
             
               >

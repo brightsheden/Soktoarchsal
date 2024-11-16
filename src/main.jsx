@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import HomeScreen from './screens/HomeScreen.jsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import BlogsPage from './screens/Blogs.jsx';
+import BlogDetailsPage from './screens/BlogDetailsPage.jsx';
 
 
 
@@ -15,6 +17,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeScreen/>
+  },
+
+  {
+    path: "/news",
+    element: <BlogsPage/>
+  },
+
+  {
+    path: "/blog/:id",
+    element: <BlogDetailsPage/>
   },
 
 ]);
