@@ -59,7 +59,7 @@ function Hero() {
       className="min-h-screen flex items-center justify-center text-center text-white transition-all duration-1000"
     >
       <div>
-        <h1 className="text-[30px] md:text-[50px] font-bold motion-preset-slide-right">
+        <h1 className="text-[30px] md:text-[50px] font-bold motion-preset-slide-right font-popins">
         <ReactTypingEffect
                 text={[`${title}`]}
                 typingDelay={1000}
@@ -72,7 +72,7 @@ function Hero() {
                 }}
        />
         </h1>
-        <p className="my-5 text-sm motion-preset-typewriter">{description}</p>
+        <p className="my-5 text-sm motion-preset-typewriter font-popins">{description}</p>
         <a href='/#about' className="bg-blue-700 text-white p-4 rounded-md hover:bg-green-800">
           {buttonText}
         </a>

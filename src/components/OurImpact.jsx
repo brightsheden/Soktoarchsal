@@ -4,8 +4,8 @@ function OurImpact() {
   return (
     <div name='impact' className='bg-white container my-8'>
         <div className='text-center my-4'>
-            <h2 className='text-2xl md:text-[50px] font-bold text-blue-700 mb-5'>Our Impact</h2>
-            <span  className='text-blue-700 font-semibold '> Transforming Land, Transforming Lives </span>
+            <h2 className='text-2xl md:text-[50px] font-bold text-blue-700 mb-5 font-popins'>Our Impact</h2>
+            <span  className='text-blue-700 font-semibold font-popins '> Transforming Land, Transforming Lives </span>
         </div>
 
 {/* card container */}
@@ -21,11 +21,11 @@ function OurImpact() {
                   
                 />
                 <h3 className="text-xl font-bold mb-2">{''}</h3>
-                <p className="text-gray-700">{"Restore over 50,000 hectares of land, contributing to a nationwide target of 1 million hectares."}</p>
+                <p className="text-gray-700 font-popins">{"Restore over 50,000 hectares of land, contributing to a nationwide target of 1 million hectares."}</p>
               </div>
 
               <div
-                className="mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200 hover:motion-preset-pop "
+                className="font-popins mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200 hover:motion-preset-pop "
               
             
               >
@@ -40,7 +40,7 @@ function OurImpact() {
               </div>
 
               <div
-                className="mb-8 border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200 hover:motion-preset-pop "
+                className="mb-8 font-popins border-2 border-primary-button p-4 rounded-lg shadow-lg shadow-gray-200 hover:motion-preset-pop "
               
             
               >

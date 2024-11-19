@@ -3,21 +3,21 @@ import { motion } from 'framer-motion'
 
 function AcreSalComponent() {
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen font-popins'>
      
       <section className="container mx-auto p-4 space-y-4">
         <div className="text-center">
-          <h1 className="text-5xl font-bold text-blue-700">Project Components</h1>
+          <h1 className="text-5xl font-bold text-blue-700 font-popins">Project Components</h1>
         </div>
 
         <motion.div 
-          className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-8"
+          className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-8 font-popins"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           <motion.div 
-            className="p-4 border-2 border-blue-700 hover:shadow-lg w-full"
+            className="p-4 border-2 border-blue-700 hover:shadow-lg w-full font-popins"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

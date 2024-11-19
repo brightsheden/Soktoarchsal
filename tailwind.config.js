@@ -6,7 +6,11 @@ module.exports = withMT({
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        popins: ["Poppins",' serif'],
+      },
+    },
   },
   plugins: [require("daisyui"), require('tailwindcss-motion')],
 })

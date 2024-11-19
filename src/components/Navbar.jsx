@@ -11,7 +11,7 @@ function Navbar() {
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
   return (
-    <div>
+    <div className='container mx-auto '>
       <nav className="navbar navbar-expand-lg navbar-light bg-light flex justify-between">
        <Link to="/">
         <img className='w-1/2' src='acresal-logo.png'/>

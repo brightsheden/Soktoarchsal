@@ -10,6 +10,11 @@ import HomeScreen from './screens/HomeScreen.jsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import BlogsPage from './screens/Blogs.jsx';
 import BlogDetailsPage from './screens/BlogDetailsPage.jsx';
+import AdminHome from './screens/AdminHome.jsx';
+import LoginPage from './screens/LoginPage.jsx';
+import RegisterPage from './screens/RegisterPage.jsx';
+import CreateBlogScreen from './screens/CreateBlogPage.jsx';
+import UserEditBlogScreen from './screens/EditBlog.jsx';
 
 
 
@@ -20,13 +25,40 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/login",
+    element: <LoginPage/>
+  },
+
+  {
+    path: "/register",
+    element: <RegisterPage/>
+  },
+
+
+
+  {
     path: "/news",
     element: <BlogsPage/>
   },
 
   {
-    path: "/blog/:id",
+    path: "/admin",
+    element: <AdminHome/>
+  },
+
+  {
+    path: "/createblog",
+    element:<CreateBlogScreen/>
+  },
+
+  {
+    path: "/blog/:slug",
     element: <BlogDetailsPage/>
+  },
+
+  {
+    path: "/admin/blog/:slug",
+    element: <UserEditBlogScreen/>
   },
 
 ]);

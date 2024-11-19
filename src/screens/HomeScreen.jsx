@@ -75,16 +75,11 @@ React.useEffect(() => {
   return (
     <div>
       <Navbar/>
-    <Header/>
+  
     <Hero/>
     <PartnerLogo/>
     <AboutUs/>
-    <MissionAndVission/>
-    <OurImpact/>
-    <SwiperSlide/>
-   <WhereWeLocate/>
-   <MovingBubbles/>
-   <motion.div
+    <motion.div
              ref={ref1}
              initial="hidden"
              animate={controls1}
@@ -94,9 +89,16 @@ React.useEffect(() => {
  <AcreSalComponent/>
 
     </motion.div>
+    <MovingBubbles/>
+    <SwiperSlide/>
+    <OurImpact/>
+   
+   <WhereWeLocate/>
+ 
+ 
   
    <MovingBubbles/>
-   <AcresalCountDown/>
+
    <PhotoGallery/>
    <Partners/>
    <Footer/>
