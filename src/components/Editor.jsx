@@ -101,7 +101,7 @@ const Editor = ({ description, change }) => {
         modules={modules}
         onChange={handleEditorChange} 
         style={{
-          height: "500px",
+          height: "300px",
           overflow: "hidden"
         }}
       />

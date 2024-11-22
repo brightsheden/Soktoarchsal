@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import { useGetBlogByDetails } from '../ApiHook';
 import DOMPurify from 'dompurify';
 import { Spinner } from '@material-tailwind/react';
+import Footer from '../components/Footer';
 
 
 const createMarkup = (html) => {
@@ -51,6 +52,8 @@ const BlogDetailsPage = () => {
   )}
 
 </div>
+
+<Footer/>
     </div>
  
   );

@@ -20,14 +20,44 @@ import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
 import PhotoGallery from '../components/Gallery'
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer'
+import OurBlogs from '../components/OurBlogs'
+import { useLocation } from 'react-router-dom'
+
 
 
 
 function HomeScreen() {
 
+  const useScrollToSection = () => {
+    const location = useLocation()
+
+    useEffect(() => {
+      if (location.state?.scrollToSection) {
+        const sectionId = location.state.scrollToSection
+        
+        // Clear the state to prevent repeated scrolling
+        window.history.replaceState({}, document.title)
+
+        // Wait for render and scroll
+        const timer = setTimeout(() => {
+          const section = document.getElementById(sectionId)
+          if (section) {
+            section.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'start' 
+            })
+          }
+        }, 300)
+
+        return () => clearTimeout(timer)
+      }
+    }, [location])
+  }
 const { ref: ref1, inView: inView1 } = useInView();
 const controls1 = useAnimation();
 
+
+useScrollToSection()
 
 const variants = {
   hidden: { opacity: 0, x: '-100vw' },
@@ -75,6 +105,8 @@ React.useEffect(() => {
   return (
     <div>
       <Navbar/>
+   
+      
   
     <Hero/>
     <PartnerLogo/>
@@ -101,6 +133,7 @@ React.useEffect(() => {
 
    <PhotoGallery/>
    <Partners/>
+   <OurBlogs/>
    <Footer/>
     </div>
   )

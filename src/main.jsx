@@ -15,6 +15,7 @@ import LoginPage from './screens/LoginPage.jsx';
 import RegisterPage from './screens/RegisterPage.jsx';
 import CreateBlogScreen from './screens/CreateBlogPage.jsx';
 import UserEditBlogScreen from './screens/EditBlog.jsx';
+import AdminBlogListScreen from './screens/AdminBlogListScreen.jsx';
 
 
 
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminHome/>
+  },
+
+  {
+    path: "/admin/blogs",
+    element: <AdminBlogListScreen/>
   },
 
   {

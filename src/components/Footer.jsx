@@ -6,6 +6,9 @@ import {
   FaWhatsappSquare 
 } from 'react-icons/fa';
 import { MdFacebook } from 'react-icons/md';
+import { FaLocationPin } from 'react-icons/fa6';
+import Logo from '../../public/acresal-logo.png'
+
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -41,14 +44,20 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-base-200 text-base-content">
+    <footer
+      className="bg-cover bg-center text-base-content relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('${Logo}')`,
+        backgroundAttachment: 'fixed'
+      }}
+    >
       <div className="container mx-auto px-4 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Logo and Description Section */}
           <div className="space-y-4">
             <div className="w-1/2 max-w-[200px]">
               <img
-                src="acresal-logo.png"
+                src={Logo}
                 alt="ACReSAL Logo"
                 className="w-full h-auto"
               />
@@ -82,8 +91,8 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-blue-700">Contact Us</h3>
             <div className="space-y-2">
-              <p className="font-semibold">
-                Address: N0 20 Zamfara Road, Sokoto, Sokoto State.
+              <p className="font-semibold flex items-center gap-1">
+               <span><FaLocationPin className='text-blue-700 text-1xl'/> </span> N0 20 Zamfara Road, Sokoto, Sokoto State.
               </p>
               <div className="space-y-1">
                 <a 

@@ -3,12 +3,18 @@ import { useLogin } from "../ApiHook";
 import { Hand } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@material-tailwind/react";
+import { UserStore } from "../state/store";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const {mutate, isLoading, isSuccess,error, isError} = useLogin()
+    const userData  = UserStore.useState(s => s.user)
+   
+    useEffect(()=>{
+      console.log(userData, "from user data")
+    },[userData])
 
     const HandleLogin = (e)=>{
         e.preventDefault()
@@ -21,14 +27,12 @@ const LoginPage = () => {
 
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        if(isSuccess){
-            navigate('/admin')
-
-        }
-
-    },[navigate,isSuccess])
-
+    useEffect(() => {
+      if (userData) {
+        navigate('/admin');
+  
+      }
+    }, [userData, navigate]);
 
   return (
     <div className="min-h-screen flex">

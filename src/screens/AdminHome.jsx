@@ -1,86 +1,108 @@
-import React, { useState } from "react";
-import AdminBlogListScreen from "./AdminBlogListScreen";
+import { Users, BookOpen, MessageSquare, BarChart3, DoorOpenIcon, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import {  useBlogs } from "../ApiHook";
+import { UserStore } from "../state/store";
+import { useEffect } from "react";
+import { FaDoorOpen } from "react-icons/fa6";
 
-const AdminHome = () => {
-  const [activeTab, setActiveTab] = useState("staffs");
+export default function AdminHome() {
+  const {data:blogs} = useBlogs()
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case "staffs":
-        return <Staffs />;
-      case "teams":
-        return <Teams />;
-      case "blogs":
-        return <Blogs />;
-      default:
-        return null;
+  const total_blogs = blogs?.length || 0;
+  const userinfo = UserStore.useState(state => state.user)
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+
+    if(userinfo === null){
+      navigate('/login')
     }
+
+  },[navigate, userinfo])
+
+
+  const logoutHandler = () => {
+    UserStore.update(s => {
+      s.user = null,
+      s.isLoggedIn=false
+    })
+    localStorage.removeItem('userInfo');
+   
   };
+  
+
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">Admin Dashboard</h1>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      {/* Header */}
+      <header className="bg-white dark:bg-gray-800 shadow ">
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Admin Dashboard
+          </h1>
 
-      {/* Tabs */}
-      <div className="flex justify-center space-x-4 mb-8">
-        <button
-          onClick={() => setActiveTab("staffs")}
-          className={`px-4 py-2 rounded-md ${
-            activeTab === "staffs"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-700"
-          }`}
-        >
-          Manage Staffs
-        </button>
-        <button
-          onClick={() => setActiveTab("teams")}
-          className={`px-4 py-2 rounded-md ${
-            activeTab === "teams"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-700"
-          }`}
-        >
-          Manage Teams
-        </button>
-        <button
-          onClick={() => setActiveTab("blogs")}
-          className={`px-4 py-2 rounded-md ${
-            activeTab === "blogs"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-700"
-          }`}
-        >
-          Manage Blogs
-        </button>
-      </div>
+          <div className="flex justify-center flex-col ">
+   
+          <button onClick={logoutHandler} className="btn btn-primary" >
+            <LogOut/>
+            Logout</button>
+           
+          </div>
+        </div>
+      </header>
 
-      {/* Tab Content */}
-      <div className="bg-white p-6 rounded-md shadow-md">{renderTabContent()}</div>
+      {/* Main Content */}
+      <main>
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <div className="px-4 py-6 sm:px-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+              <Link to="/admin/blogs">
+              <AdminCard
+                title="Manage Blogs"
+                description="Create, edit, and delete blog posts"
+                icon={<BookOpen className="h-6 w-6 text-gray-500 dark:text-gray-400" />}
+                metric={total_blogs}
+                metricLabel="Active Blogs"
+              />
+              </Link>
+             
+              <AdminCard
+                title="Manage Teams"
+                description="Review and moderate teams"
+                icon={
+                  <Users className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                }
+                metric="0"
+                metricLabel="Pending Comments"
+              />
+            
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
-};
+}
 
-const Staffs = () => (
-  <div>
-    <h2 className="text-xl font-bold mb-4">Manage Staffs</h2>
-    <p>Here you can add, edit, or remove staff members.</p>
-    {/* Add form or table for managing staffs */}
-  </div>
-);
-
-const Teams = () => (
-  <div>
-    <h2 className="text-xl font-bold mb-4">Manage Teams</h2>
-    <p>Here you can add, edit, or remove teams.</p>
-    {/* Add form or table for managing teams */}
-  </div>
-);
-
-const Blogs = () => (
-  <div>
-    <AdminBlogListScreen/>
-  </div>
-);
-
-export default AdminHome;
+function AdminCard({ title, description, icon, metric, metricLabel }) {
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+        <h3 className="text-sm font-medium text-gray-900 dark:text-white">
+          {title}
+        </h3>
+        <div>{icon}</div>
+      </div>
+      <div className="p-4">
+        <div className="text-2xl font-bold text-gray-900 dark:text-white">
+          {metric}
+        </div>
+        <p className="text-xs text-gray-500 dark:text-gray-400">{metricLabel}</p>
+        <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -5,13 +5,14 @@ import { useBlogs } from '../ApiHook';
 import { Link } from 'react-router-dom';
 import { Spinner } from '@material-tailwind/react';
 import DOMPurify from 'dompurify'
+import { API_URL } from '../../config';
 const createMarkup = (html) => {
   return { __html: DOMPurify.sanitize(html) };
 };
 
 const BlogsPage = () => {
   const {data:blogs, isLoading, isSuccess, isError, error} = useBlogs();
-  const API_URL = "http://127.0.0.1:8000/";
+
 
   return (
     <div>
@@ -51,7 +52,7 @@ const BlogsPage = () => {
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{blog.title}</h2>
-                  <p dangerouslySetInnerHTML={createMarkup(blog.content)}></p>
+                  <p dangerouslySetInnerHTML={createMarkup(blog?.content?.slice(0,20))}></p>
                   <div className="card-actions justify-end">
                     <Link to={`/blog/${blog.slug}`}>
                       <button className="btn btn-primary bg-blue-700 border-blue-700">Read More</button>

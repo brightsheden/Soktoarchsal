@@ -1,9 +1,9 @@
 import axios from "axios";
 import { UserStore } from "./state/store";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryClient, useMutation, useQuery, useQueryClient } from "react-query";
+import { API_URL } from "../config";
 
 
-const API_URL = 'http://127.0.0.1:8000'
 
 
 const loginUser = async (loginData) => {
@@ -52,13 +52,6 @@ const loginUser = async (loginData) => {
 
 
 
-  const logoutUser = async () => {
-    UserStore.update({
-        userInfo : null,
-        isLoggedIn : false
-    })
-
-  }
 
 
 
@@ -88,20 +81,36 @@ const loginUser = async (loginData) => {
 
 export const useEditBlog = () => {
     const queryClient = useQueryClient();
-    const token = UserStore.useState(state => state.user.token)
+    const token = UserStore.useState(state => state.user.token);
+    
     return useMutation(
-      async ({id,data }) => {
-        const response = await axios.put(`${API_URL}/api/blog/update/${id}/`, data,{
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        return response.data;
+      async ({id, data}) => {
+        try {
+          console.log('Sending data:', Object.fromEntries(data.entries())); // Debug log
+          const response = await axios.put(`${API_URL}/api/blog/update/${id}/`, data, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          return response.data;
+        } catch (error) {
+          console.error('API Error:', error.response?.data); // Debug log
+          throw new Error(
+            error.response?.data?.message || 
+            error.response?.data?.detail || 
+            'Failed to update blog'
+          );
+        }
       },
       {
-        onSuccess: () => {
-         queryClient.invalidateQueries('blogs');
+        onSuccess: (data, variables) => {
+          queryClient.invalidateQueries('blogs');
+          queryClient.invalidateQueries(['blog-details', variables.id]);
         },
+        onError: (error) => {
+          console.error('Update failed:', error);
+        }
       }
     );
   };
@@ -117,13 +126,61 @@ export const useEditBlog = () => {
   
 
 
-export const useGetBlogByDetails = (slug)=>{
-  return useQuery(['blog-datails'],
+export const useGetBlogByDetails = (slug) => {
+  return useQuery(['blog-details', slug],
     async () => {
-      
-     const response = await axios.get(`${API_URL}/api/blog/${slug}/`)
-      console.log(response.data)
-     return response.data
+      try {
+        const response = await axios.get(`${API_URL}/api/blog/${slug}/`);
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to fetch blog details');
+      }
+    },
+    {
+      enabled: !!slug,
+      retry: 1
     }
-  )
+  );
+};
+
+
+
+export const useDelete = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    async ({id}) => {
+      const response = await axios.delete(`${API_URL}/api/blogs/${id}/`);
+      return response.data;
+    }
+  ), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('blogs');
+    }
+  }
 }
+
+
+
+export const useDeleteAccount = () => {
+  const queryClient = useQueryClient();
+  const token = UserStore.useState(state => state.user.token)
+
+  
+  return useMutation(
+    async ({ id }) => {
+      const response = await axios.delete(`${API_URL}/api/blog/delete/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+       queryClient.invalidateQueries('blogs');
+      },
+    }
+  );
+};
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Element } from 'react-scroll';
+
 import { BiBulb, BiSkipNext } from 'react-icons/bi';
 
 function AboutUs() {
@@ -10,7 +10,7 @@ function AboutUs() {
 
   return (
 
-    <div name='about' id='about' ref={ref} className="element py-16 md:py-24 lg:py-32">
+    <div  id='about' ref={ref} className="py-16 md:py-24 lg:py-32">
       <div className="container mx-auto px-4">
 
     {/*    <motion.h2 

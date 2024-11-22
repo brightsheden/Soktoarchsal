@@ -81,6 +81,10 @@ const {isSuccess, isLoading, isError, error, mutate, data}= useCreateBlog()
     }
   };
 
+  const handNavBack = ()=>{
+    navigate(-1)
+  }
+
  return (
   <>
         <div className='hidden md:block'>
@@ -89,8 +93,10 @@ const {isSuccess, isLoading, isError, error, mutate, data}= useCreateBlog()
 
     <div className="container mx-auto  p-2   max-w-[956px] mt-[10vh] md:mt-0">
     
-    
+
     <div className="p-8 ">
+
+      <button className='btn mb-6 bg-blue-700 text-white' onClick={handNavBack}>Back</button>
       
       <form className='' onSubmit={handleFormSubmit}>
         <div className="mb-4">
@@ -100,7 +106,7 @@ const {isSuccess, isLoading, isError, error, mutate, data}= useCreateBlog()
             name="title"
             value={formData.title}
             onChange={(e) => handleChange(e)}
-            className="input focus:outline-none border-none text-xl w-full"
+            className="input-bordered border p-2 rounded-md border-black focus:outline-none  text-xl w-full"
             placeholder='Tilte'
           />
         </div>
@@ -113,7 +119,7 @@ const {isSuccess, isLoading, isError, error, mutate, data}= useCreateBlog()
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="image" className="block text-gray-600 font-medium mb-2">Image:</label>
+          <label htmlFor="image" className="block text-gray-600 font-medium mb-2">Cover Image:</label>
           <FileInput
             type="file"
             id="taskimage"
@@ -138,7 +144,7 @@ const {isSuccess, isLoading, isError, error, mutate, data}= useCreateBlog()
         <div className='mt-20'> 
         <button
           type="submit"
-          className="btn w-full btn-primary"
+          className="btn w-full bg-blue-700 text-white"
         >
           Create Blog
         </button>
