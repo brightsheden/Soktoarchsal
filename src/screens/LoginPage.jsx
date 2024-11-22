@@ -53,7 +53,7 @@ const LoginPage = () => {
         </div>
         
           <form onSubmit={HandleLogin}>
-            {isError && (<Alert>{error.response.data.detail}</Alert>)}
+            {isError && (<Alert>{error?.response?.data?.detail}</Alert>)}
 
 
             {/* Email Input */}
