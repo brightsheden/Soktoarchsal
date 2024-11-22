@@ -6,6 +6,7 @@ import { useGetBlogByDetails } from '../ApiHook';
 import DOMPurify from 'dompurify';
 import { Spinner } from '@material-tailwind/react';
 import Footer from '../components/Footer';
+import { API_URL } from '../../config';
 
 
 const createMarkup = (html) => {
@@ -15,7 +16,7 @@ const createMarkup = (html) => {
 const BlogDetailsPage = () => {
   const { slug } = useParams(); 
   const {data:blog, isLoading, isSuccess, isError, error} = useGetBlogByDetails(slug)  
-  const API_URL = "http://127.0.0.1:8000"
+
 
   if (!blog) {
     return <div className="text-center py-10">Blog not found!</div>;
