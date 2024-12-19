@@ -1,4 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
+import { useLocation } from 'react-router-dom';
+
+
 import Header from '../components/Header'
 import Hero from '../components/Hero'
 import Dhero from '../components/Dhero'
@@ -16,127 +22,174 @@ import ImprovingLiveHood from '../components/ImprovingLiveHood'
 import Partners from '../components/Partners'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
-import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
+
 import PhotoGallery from '../components/Gallery'
-import { motion, useAnimation } from 'framer-motion';
-import { useInView } from 'react-intersection-observer'
+
 import OurBlogs from '../components/OurBlogs'
-import { useLocation } from 'react-router-dom'
 
+// Animation wrapper component
+const AnimatedSection = ({ children, animation = 'fade' }) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    threshold: 0.2,
+    triggerOnce: true
+  });
 
+  const animations = {
+    fade: {
+      hidden: { opacity: 0, y: 50 },
+      visible: { opacity: 1, y: 0 }
+    },
+    slideRight: {
+      hidden: { opacity: 0, x: -100 },
+      visible: { opacity: 1, x: 0 }
+    },
+    slideLeft: {
+      hidden: { opacity: 0, x: 100 },
+      visible: { opacity: 1, x: 0 }
+    },
+    scale: {
+      hidden: { opacity: 0, scale: 0.8 },
+      visible: { opacity: 1, scale: 1 }
+    },
+    slideUp: {
+      hidden: { opacity: 0, y: 100 },
+      visible: { opacity: 1, y: 0 }
+    }
+  };
 
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [controls, inView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={animations[animation]}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 function HomeScreen() {
-
   const useScrollToSection = () => {
-    const location = useLocation()
+    const location = useLocation();
 
     useEffect(() => {
       if (location.state?.scrollToSection) {
-        const sectionId = location.state.scrollToSection
+        const sectionId = location.state.scrollToSection;
+        window.history.replaceState({}, document.title);
         
-        // Clear the state to prevent repeated scrolling
-        window.history.replaceState({}, document.title)
-
-        // Wait for render and scroll
         const timer = setTimeout(() => {
-          const section = document.getElementById(sectionId)
+          const section = document.getElementById(sectionId);
           if (section) {
-            section.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'start' 
-            })
+            section.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
           }
-        }, 300)
+        }, 300);
 
-        return () => clearTimeout(timer)
+        return () => clearTimeout(timer);
       }
-    }, [location])
-  }
-const { ref: ref1, inView: inView1 } = useInView();
-const controls1 = useAnimation();
+    }, [location]);
+  };
 
-
-useScrollToSection()
-
-const variants = {
-  hidden: { opacity: 0, x: '-100vw' },
-  visible: { opacity: 1, x: 0 },
-  exit: { opacity: 0 }
-};
-
-if (window.innerWidth > 768) {
-  variants.hidden.x = '-50vw';
-}
-
-React.useEffect(() => {
-  if (inView1) {
-    controls1.start('visible');
-  } else {
-    controls1.start('hidden');
-  }
-}, [controls1, inView1]);
-
-
+  useScrollToSection();
 
   useEffect(() => {
-    
-    // Registering the 'begin' event and logging it to the console when triggered.
     Events.scrollEvent.register('begin', (to, element) => {
       console.log('begin', to, element);
     });
 
-    // Registering the 'end' event and logging it to the console when triggered.
     Events.scrollEvent.register('end', (to, element) => {
       console.log('end', to, element);
     });
 
-    // Updating scrollSpy when the component mounts.
     scrollSpy.update();
 
-    // Returning a cleanup function to remove the registered events when the component unmounts.
     return () => {
       Events.scrollEvent.remove('begin');
       Events.scrollEvent.remove('end');
     };
   }, []);
 
-
   return (
-    <div>
-      <Navbar/>
-   
+    <div className="overflow-hidden">
+      <Navbar />
       
-  
-    <Hero/>
-    <PartnerLogo/>
-    <AboutUs/>
-    <motion.div
-             ref={ref1}
-             initial="hidden"
-             animate={controls1}
-             variants={variants}
-             transition={{ duration: 1.5 }}
-    >
- <AcreSalComponent/>
+      {/* Hero with fade-in animation */}
+      <AnimatedSection animation="fade">
+        <Hero />
+      </AnimatedSection>
 
-    </motion.div>
-    <MovingBubbles/>
-    <SwiperSlide/>
-    <OurImpact/>
-   
-   <WhereWeLocate/>
- 
- 
-  
-   <MovingBubbles/>
+      {/* Partner logos sliding from left */}
+      <AnimatedSection animation="slideRight">
+        <PartnerLogo />
+      </AnimatedSection>
 
-   <PhotoGallery/>
-   <Partners/>
-   <OurBlogs/>
-   <Footer/>
+      {/* About Us section scaling up */}
+      <AnimatedSection animation="scale">
+        <AboutUs />
+      </AnimatedSection>
+
+      {/* ACReSAL component sliding from right */}
+      <AnimatedSection animation="slideLeft">
+        <AcreSalComponent />
+      </AnimatedSection>
+
+      {/* Moving bubbles with fade animation */}
+      <AnimatedSection animation="fade">
+        <MovingBubbles />
+      </AnimatedSection>
+
+      {/* Swiper sliding from left */}
+      <AnimatedSection animation="slideRight">
+        <SwiperSlide />
+      </AnimatedSection>
+
+      {/* Our Impact scaling up */}
+      <AnimatedSection animation="scale">
+        <OurImpact />
+      </AnimatedSection>
+
+      {/* Location sliding from right */}
+      <AnimatedSection animation="slideLeft">
+        <WhereWeLocate />
+      </AnimatedSection>
+
+      {/* Second Moving Bubbles */}
+      <AnimatedSection animation="fade">
+        <MovingBubbles />
+      </AnimatedSection>
+
+      {/* Photo Gallery sliding up */}
+      <AnimatedSection animation="slideUp">
+        <PhotoGallery />
+      </AnimatedSection>
+
+      {/* Partners section sliding from left */}
+      <AnimatedSection animation="slideRight">
+        <Partners />
+      </AnimatedSection>
+
+      {/* Our Blogs scaling up */}
+      <AnimatedSection animation="scale">
+        <OurBlogs />
+      </AnimatedSection>
+
+      {/* Footer fading in */}
+      <AnimatedSection animation="fade">
+        <Footer />
+      </AnimatedSection>
     </div>
-  )
+  );
 }
 
-export default HomeScreen
+export default HomeScreen;
