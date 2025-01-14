@@ -113,9 +113,9 @@ const {isSuccess, isLoading, isError, error, mutate, data}= useCreateBlog()
 
         <div className="overflow-hidden bg-blue-500 h-full w-full flex-shrink-0 ">
           {formData.imagePreview ? (
-            <img src={formData.imagePreview} alt="Profile Preview" className="w-full h-40 object-cover" />
+            <img src={formData.imagePreview} alt="cover photo" className="w-full h-40 object-cover" />
           ) : (
-            <img src="https://via.placeholder.com/150" alt="task" className="w-full h-40 object-cover" />
+            <img src="https://via.placeholder.com/150" alt="cover photo" className="w-full h-40 object-cover" />
           )}
         </div>
         <div className="mb-4">
@@ -142,12 +142,23 @@ const {isSuccess, isLoading, isError, error, mutate, data}= useCreateBlog()
           <Editor description={formData.content} change={(content) => handleChange(null, content)} />
         </div>
         <div className='mt-20'> 
-        <button
+        {isLoading ? (
+           <button
+           disabled
+           type="submit"
+           className="btn w-full bg-blue-700 text-white"
+         >
+           Loading...
+         </button>
+        ) :(
+          <button
           type="submit"
           className="btn w-full bg-blue-700 text-white"
         >
           Create Blog
         </button>
+        )}
+       
 
         </div>
       
