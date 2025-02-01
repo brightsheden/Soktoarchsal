@@ -16,6 +16,9 @@ import RegisterPage from './screens/RegisterPage.jsx';
 import CreateBlogScreen from './screens/CreateBlogPage.jsx';
 import UserEditBlogScreen from './screens/EditBlog.jsx';
 import AdminBlogListScreen from './screens/AdminBlogListScreen.jsx';
+import AdminGalleryScreen from './screens/GalleryManagement.jsx';
+import UploadImageScreen from './screens/UploadImage.jsx';
+import EditImageScreen from './screens/EditImage.jsx';
 
 
 
@@ -66,6 +69,23 @@ const router = createBrowserRouter([
     path: "/admin/blog/:slug",
     element: <UserEditBlogScreen/>
   },
+
+  {
+    path: "/admin/gallery",
+    element: <AdminGalleryScreen/>
+  },
+
+  {
+    path: "/admin/gallery/upload",
+    element: <UploadImageScreen/>
+  },
+
+  {
+    path: "/admin/gallery/:id/edit",
+    element: <EditImageScreen/>
+  },
+
+
 
 ]);
 

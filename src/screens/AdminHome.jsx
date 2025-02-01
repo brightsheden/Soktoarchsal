@@ -1,14 +1,16 @@
-import { Users, BookOpen, MessageSquare, BarChart3, DoorOpenIcon, LogOut } from "lucide-react";
+import { Users, BookOpen, MessageSquare, BarChart3, DoorOpenIcon, LogOut, Image } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import {  useBlogs } from "../ApiHook";
+import {  useBlogs, useGalleryImages } from "../ApiHook";
 import { UserStore } from "../state/store";
 import { useEffect } from "react";
 import { FaDoorOpen } from "react-icons/fa6";
 
 export default function AdminHome() {
   const {data:blogs} = useBlogs()
+   const { data: images } = useGalleryImages();
 
   const total_blogs = blogs?.length || 0;
+  const total_images = images?.length || 0;
   const userinfo = UserStore.useState(state => state.user)
   const navigate = useNavigate()
 
@@ -64,6 +66,16 @@ export default function AdminHome() {
                 icon={<BookOpen className="h-6 w-6 text-gray-500 dark:text-gray-400" />}
                 metric={total_blogs}
                 metricLabel="Active Blogs"
+              />
+              </Link>
+
+              <Link to="/admin/gallery">
+              <AdminCard
+                title="Manage Gallery"
+                description="Create, edit, and delete galleryy"
+                icon={<Image className="h-6 w-6 text-gray-500 dark:text-gray-400" />}
+                metric={total_images}
+                metricLabel="Event images"
               />
               </Link>
              

@@ -150,9 +150,9 @@ function HomeScreen() {
       </AnimatedSection>
 
       {/* Swiper sliding from left */}
-      <AnimatedSection animation="slideRight">
+      {/* <AnimatedSection animation="slideRight">
         <SwiperSlide />
-      </AnimatedSection>
+      </AnimatedSection> */}
 
       {/* Our Impact scaling up */}
       <AnimatedSection animation="scale">

@@ -184,3 +184,100 @@ export const useDeleteAccount = () => {
   );
 };
 
+
+
+
+
+export const useAddImage = () => {
+  const queryClient = useQueryClient();
+  const token = UserStore.useState(s => s.user.token);
+  
+  return useMutation(async (imageData) => {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    const response = await axios.post(`${API_URL}/api/gallery/add_image/`, imageData, config);
+    return response.data;
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('fetchGalleryImages');
+    }
+  });
+};
+
+export const useEditImage = () => {
+  const queryClient = useQueryClient();
+  const token = UserStore.useState(state => state.user.token);
+  
+  return useMutation(
+    async ({id, data}) => {
+      try {
+        const response = await axios.put(`${API_URL}/api/gallery/update_image/${id}/`, data, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to update image');
+      }
+    },
+    {
+      onSuccess: (data, variables) => {
+        queryClient.invalidateQueries('gallery');
+        queryClient.invalidateQueries(['image-details', variables.id]);
+      }
+    }
+  );
+};
+
+export const useGalleryImages = () => {
+  return useQuery('gallery', async () => {
+    const { data } = await axios.get(`${API_URL}/api/gallery/get_images/`);
+    return data;
+  });
+};
+
+export const useGetImageDetails = (id) => {
+  return useQuery(['image-details', id],
+    async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/gallery/get_image/${id}/`);
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to fetch image details');
+      }
+    },
+    {
+      enabled: !!id,
+      retry: 1
+    }
+  );
+};
+
+export const useDeleteImage = () => {
+  const queryClient = useQueryClient();
+  const token = UserStore.useState(s=> s.user.token)
+  
+  return useMutation(
+    async ({id}) => {
+      const response = await axios.delete(`${API_URL}/api/gallery/delete_image/${id}/`, {
+        
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`,
+          },
+      });
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('gallery');
+      }
+    }
+  );
+};

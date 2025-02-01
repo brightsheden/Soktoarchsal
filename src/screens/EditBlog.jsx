@@ -45,7 +45,7 @@ const UserEditBlogScreen = () => {
             setFormData({
                 title: blog?.title || "",
                 image: blog?.featured_image || null,
-                imagePreview: blog?.featured_image || null,
+                imagePreview: null,
                 content: blog?.content || "",
                 is_approved: blog?.published || false,
             });
@@ -163,7 +163,16 @@ const UserEditBlogScreen = () => {
                             />
                         </div>
                         <div className="overflow-hidden bg-blue-500 h-full w-full flex-shrink-0">
-                        <img
+                            {formData.imagePreview ? (
+                                 <img
+                                 src={formData.imagePreview} alt='cover photo'/>
+             
+                            ): (
+                                <img
+                                src={`${API_URL}${blog?.featured_image}`} alt='cover photo'/>
+                            )}
+                        {/* <img
+                       
     src={
         formData.imagePreview 
             ? (formData.imagePreview instanceof File 
@@ -173,7 +182,7 @@ const UserEditBlogScreen = () => {
     }
     alt="Blog preview"
     className="w-full h-40 object-cover"
-/>
+/> */}
                         </div>
                         <div className="mb-4">
                             <FileInput

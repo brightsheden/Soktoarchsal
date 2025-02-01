@@ -80,7 +80,7 @@ function AboutUs() {
           >
             <img
               className="w-full  shadow-2xl"
-              src="/images/img1.jpeg"
+              src="/images/acresalfront.jpg"
               alt="About Us Image"
             />
           </motion.div>

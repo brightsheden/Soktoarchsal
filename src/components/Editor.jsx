@@ -6,7 +6,6 @@ import QuillEditor from "react-quill";
 
 // Importing styles
 import "react-quill/dist/quill.snow.css";
-//import styles from "./styles.module.css";
 
 const Editor = ({ description, change }) => {
   // Editor state
@@ -14,7 +13,7 @@ const Editor = ({ description, change }) => {
 
   useEffect(() => {
     setValue(description);
-  }, [description]); // Use description as dependency to update value when description changes
+  }, [description]);
 
   // Editor ref
   const quill = useRef();
@@ -22,9 +21,10 @@ const Editor = ({ description, change }) => {
   // Handler to handle editor changes
   const handleEditorChange = (content) => {
     setValue(content);
-    change(content); // Call the change function with the new content
+    change(content);
   };
 
+  // Custom image handler that inserts the image at the end of the content
   const imageHandler = useCallback(() => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
@@ -38,9 +38,15 @@ const Editor = ({ description, change }) => {
       reader.onload = () => {
         const imageUrl = reader.result;
         const quillEditor = quill.current.getEditor();
-
-        const range = quillEditor.getSelection(true);
-        quillEditor.insertEmbed(range.index, "image", imageUrl);
+        
+        // Determine the insertion index at the end of the document
+        const length = quillEditor.getLength();
+        // Insert the image at the end
+        quillEditor.insertEmbed(length, "image", imageUrl, "user");
+        // Optionally insert a newline after the image so that subsequent text appears on a new line
+        quillEditor.insertText(length + 1, "\n", "user");
+        // Move the cursor to after the inserted image (or newline)
+        quillEditor.setSelection(length + 2, 0);
       };
 
       reader.readAsDataURL(file);
@@ -94,15 +100,14 @@ const Editor = ({ description, change }) => {
     <div className="editor-container">
       <QuillEditor
         ref={(el) => (quill.current = el)}
-        className=""
         theme="snow"
         value={value}
         formats={formats}
         modules={modules}
-        onChange={handleEditorChange} 
+        onChange={handleEditorChange}
         style={{
-          height: "300px",
-          overflow: "hidden"
+          height: "100%",
+          overflow: "hidden",
         }}
       />
     </div>
