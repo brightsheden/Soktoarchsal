@@ -1,153 +1,149 @@
 import React, { useEffect, useState } from "react";
 import { useLogin } from "../ApiHook";
-import { Hand } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { LogIn, Mail, Lock, Loader2, ArrowLeft } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 import { Alert } from "@material-tailwind/react";
 import { UserStore } from "../state/store";
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate();
 
-    const {mutate, isLoading, isSuccess,error, isError} = useLogin()
-    const userData  = UserStore.useState(s => s.user)
-   
-    useEffect(()=>{
-      console.log(userData, "from user data")
-    },[userData])
+  const { mutate, isLoading, error, isError } = useLogin()
+  const userData = UserStore.useState(s => s.user)
 
-    const HandleLogin = (e)=>{
-        e.preventDefault()
-        mutate({email,password})
-        console.log(email,password)
-        
-        setEmail('')
-        setPassword('')
+  const HandleLogin = (e) => {
+    e.preventDefault()
+    mutate({ email, password })
+  }
+
+  useEffect(() => {
+    if (userData) {
+      navigate('/admin');
     }
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-      if (userData) {
-        navigate('/admin');
-  
-      }
-    }, [userData, navigate]);
+  }, [userData, navigate]);
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left Section - Image */}
+    <div className="min-h-screen flex bg-slate-50">
+      {/* Left Section - Image & Branding */}
       <div
-        className="w-1/2 bg-cover bg-center hidden md:block"
+        className="hidden lg:block lg:w-3/5 bg-cover bg-center relative"
         style={{
-          backgroundImage: "url('/images/img3.jpeg')", // Replace with your image path
+          backgroundImage: "url('/images/img3.jpeg')",
         }}
-      ></div>
+      >
+        <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 flex flex-col justify-between p-12 text-white">
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transition-all group-hover:bg-white/30">
+              <ArrowLeft size={20} />
+            </div>
+            <span className="font-bold tracking-wide uppercase text-sm">Back to Website</span>
+          </Link>
+
+          <div>
+            <h1 className="text-6xl font-extrabold mb-6 leading-tight">
+              Empowering <br />
+              <span className="text-primary-light italic">Sokoto's Landscapes</span>
+            </h1>
+            <p className="text-xl text-slate-300 max-w-lg leading-relaxed">
+              Managing our environment with resilience and innovation for a sustainable future.
+            </p>
+          </div>
+
+          <div className="text-sm text-slate-400 font-medium tracking-widest uppercase">
+            ACReSAL Sokoto Admin Portal
+          </div>
+        </div>
+      </div>
 
       {/* Right Section - Login Form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-100">
-        <div className="w-3/4 max-w-md bg-white p-8 rounded-lg shadow-md">
-        <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-center ">Staff Login</h2>
-        <span className="text-sm text-gray-600 text-center">Login to the Admin Pannel</span>
-        </div>
-        
-          <form onSubmit={HandleLogin}>
-            {isError && (<Alert>{error?.response?.data?.detail}</Alert>)}
+      <div className="w-full lg:w-2/5 flex items-center justify-center p-8 md:p-16">
+        <div className="w-full max-w-md">
+          <div className="mb-12">
+            <h2 className="text-4xl font-extrabold text-slate-900 mb-4">Staff Login</h2>
+            <p className="text-slate-500 font-medium">Welcome back! Please enter your credentials to access the administrative dashboard.</p>
+          </div>
 
+          <form onSubmit={HandleLogin} className="space-y-6">
+            {isError && (
+              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+                <Alert color="red" className="bg-red-50 text-red-700 border border-red-100 rounded-xl">
+                  {error?.response?.data?.detail || "Invalid email or password"}
+                </Alert>
+              </motion.div>
+            )}
 
-            {/* Email Input */}
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-gray-700 font-medium mb-2"
-              >
-                Email
+            <div>
+              <label className="block text-slate-700 text-sm font-bold uppercase tracking-wider mb-2" htmlFor="email">
+                Email Address
               </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e)=>setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Password Input */}
-            <div className="mb-4">
-              <label
-                htmlFor="password"
-                className="block text-gray-700 font-medium mb-2"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e)=>setPassword(e.target.value)}
-                placeholder="Enter your password"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Remember Me & Forgot Password */}
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox text-blue-500"
-                  />
-                  <span className="ml-2 text-gray-700">Remember Me</span>
-                </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Mail size={18} className="text-slate-400" />
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@company.com"
+                  required
+                  className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
+                />
               </div>
-              <a
-                href="#"
-                className="text-blue-500 text-sm hover:underline"
-              >
-                Forgot Password?
-              </a>
             </div>
 
-            {/* Submit Button */}
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-slate-700 text-sm font-bold uppercase tracking-wider" htmlFor="password">
+                  Password
+                </label>
+                <Link to="/forgot-password" size="sm" className="text-primary hover:text-primary-light text-sm font-bold">
+                  Forgot?
+                </Link>
+              </div>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Lock size={18} className="text-slate-400" />
+                </div>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
+                />
+              </div>
+            </div>
 
-            {isLoading ? ( <button
+            <button
               type="submit"
-              disabled
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+              disabled={isLoading}
+              className="w-full btn-primary-premium flex justify-center py-4"
             >
-              loading..
-            </button>):
-            ( <button
-                type="submit"
-                className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-              >
-                Login
-              </button>)}
-           
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" size={20} />
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <LogIn size={20} />
+                  <span>Sign In</span>
+                </div>
+              )}
+            </button>
           </form>
 
-          {/* Divider */}
-          <div className="my-6 text-center text-gray-500">or</div>
-
-          {/* Social Login */}
-          <button
-            className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-gray-200"
-          >
-            <svg
-              className="h-5 w-5 mr-2"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-            >
-              <path
-                d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12V14.708h-3.056v-3.633H12V8.533c0-3.019 1.826-4.662 4.505-4.662 1.29 0 2.396.096 2.718.14v3.153h-1.865c-1.463 0-1.744.695-1.744 1.712v2.246h3.488l-.454 3.633h-3.034V24h5.957c.731 0 1.325-.593 1.325-1.325V1.325C24 .593 23.407 0 22.675 0z"
-              />
-            </svg>
-            Continue with Facebook
-          </button>
+          <div className="mt-12 pt-8 border-t border-slate-200 text-center">
+            <p className="text-slate-500 text-sm font-medium">
+              &copy; {new Date().getFullYear()} Sokoto ACReSAL. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -1,193 +1,72 @@
 import React, { useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
 import { useLocation } from 'react-router-dom';
+import { Events, scrollSpy } from 'react-scroll';
 
-
-import Header from '../components/Header'
-import Hero from '../components/Hero'
-import Dhero from '../components/Dhero'
-import PartnerLogo from '../components/PartnerLogo'
-import AboutUs from '../components/AboutUs'
-import MissionAndVission from '../components/MissionAndVission'
-import OurImpact from '../components/OurImpact'
-import OurApproachSection from '../components/Approach'
-import SwiperSlide from '../components/SwiperSlide'
-import WhereWeLocate from '../components/WhereWeLocate'
-import AcreSalComponent from '../components/AcreSalComponent'
-import AcresalCountDown from '../components/AcresalCountDown'
-import MovingBubbles from '../components/MovingBubles'
-import ImprovingLiveHood from '../components/ImprovingLiveHood'
-import Partners from '../components/Partners'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
-
-import PhotoGallery from '../components/Gallery'
-
-import OurBlogs from '../components/OurBlogs'
-
-// Animation wrapper component
-const AnimatedSection = ({ children, animation = 'fade' }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({
-    threshold: 0.2,
-    triggerOnce: true
-  });
-
-  const animations = {
-    fade: {
-      hidden: { opacity: 0, y: 50 },
-      visible: { opacity: 1, y: 0 }
-    },
-    slideRight: {
-      hidden: { opacity: 0, x: -100 },
-      visible: { opacity: 1, x: 0 }
-    },
-    slideLeft: {
-      hidden: { opacity: 0, x: 100 },
-      visible: { opacity: 1, x: 0 }
-    },
-    scale: {
-      hidden: { opacity: 0, scale: 0.8 },
-      visible: { opacity: 1, scale: 1 }
-    },
-    slideUp: {
-      hidden: { opacity: 0, y: 100 },
-      visible: { opacity: 1, y: 0 }
-    }
-  };
-
-  useEffect(() => {
-    if (inView) {
-      controls.start('visible');
-    }
-  }, [controls, inView]);
-
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={animations[animation]}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
-};
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import PartnerLogo from '../components/PartnerLogo';
+import AboutUs from '../components/AboutUs';
+import AcreSalComponent from '../components/AcreSalComponent';
+import OurImpact from '../components/OurImpact';
+import WhereWeLocate from '../components/WhereWeLocate';
+import PhotoGallery from '../components/Gallery';
+import Partners from '../components/Partners';
+import OurBlogs from '../components/OurBlogs';
+import Footer from '../components/Footer';
 
 function HomeScreen() {
-  const useScrollToSection = () => {
-    const location = useLocation();
-
-    useEffect(() => {
-      if (location.state?.scrollToSection) {
-        const sectionId = location.state.scrollToSection;
-        window.history.replaceState({}, document.title);
-        
-        const timer = setTimeout(() => {
-          const section = document.getElementById(sectionId);
-          if (section) {
-            section.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-        }, 300);
-
-        return () => clearTimeout(timer);
-      }
-    }, [location]);
-  };
-
-  useScrollToSection();
+  const location = useLocation();
 
   useEffect(() => {
-    Events.scrollEvent.register('begin', (to, element) => {
-      console.log('begin', to, element);
-    });
+    if (location.state?.scrollToSection) {
+      const sectionId = location.state.scrollToSection;
+      window.history.replaceState({}, document.title);
 
-    Events.scrollEvent.register('end', (to, element) => {
-      console.log('end', to, element);
-    });
+      const timer = setTimeout(() => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 300);
 
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
+
+  useEffect(() => {
     scrollSpy.update();
-
-    return () => {
-      Events.scrollEvent.remove('begin');
-      Events.scrollEvent.remove('end');
-    };
+    return () => { };
   }, []);
 
   return (
-    <div className="overflow-hidden">
+    <div className="bg-white">
       <Navbar />
-      
-      {/* Hero with fade-in animation */}
-      <AnimatedSection animation="fade">
+
+      <main>
         <Hero />
-      </AnimatedSection>
 
-      {/* Partner logos sliding from left */}
-      <AnimatedSection animation="slideRight">
-        <PartnerLogo />
-      </AnimatedSection>
+        {/* We can keep PartnerLogo here as a separator or trust it inside Partners section */}
+        {/* <PartnerLogo /> */}
 
-      {/* About Us section scaling up */}
-      <AnimatedSection animation="scale">
         <AboutUs />
-      </AnimatedSection>
 
-      {/* ACReSAL component sliding from right */}
-      <AnimatedSection animation="slideLeft">
         <AcreSalComponent />
-      </AnimatedSection>
 
-      {/* Moving bubbles with fade animation */}
-      <AnimatedSection animation="fade">
-        <MovingBubbles />
-      </AnimatedSection>
-
-      {/* Swiper sliding from left */}
-      {/* <AnimatedSection animation="slideRight">
-        <SwiperSlide />
-      </AnimatedSection> */}
-
-      {/* Our Impact scaling up */}
-      <AnimatedSection animation="scale">
         <OurImpact />
-      </AnimatedSection>
 
-      {/* Location sliding from right */}
-      <AnimatedSection animation="slideLeft">
-        <WhereWeLocate />
-      </AnimatedSection>
-
-      {/* Second Moving Bubbles */}
-      <AnimatedSection animation="fade">
-        <MovingBubbles />
-      </AnimatedSection>
-
-      {/* Photo Gallery sliding up */}
-      <AnimatedSection animation="slideUp">
         <PhotoGallery />
-      </AnimatedSection>
 
-      {/* Partners section sliding from left */}
-      <AnimatedSection animation="slideRight">
+        <WhereWeLocate />
+
         <Partners />
-      </AnimatedSection>
 
-      {/* Our Blogs scaling up */}
-      <AnimatedSection animation="scale">
         <OurBlogs />
-      </AnimatedSection>
+      </main>
 
-      {/* Footer fading in */}
-      <AnimatedSection animation="fade">
-        <Footer />
-      </AnimatedSection>
+      <Footer />
     </div>
   );
 }

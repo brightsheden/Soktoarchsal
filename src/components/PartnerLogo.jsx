@@ -1,89 +1,53 @@
-import React, { useRef ,useEffect} from 'react'
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const partners = [
+  { name: 'Nigeria Bureau of Statistics', logo: 'nigeria.png' },
+  { name: 'Sokoto Government House', logo: 'sokotogovehouse.jpg' },
+  { name: 'ACReSAL National', logo: 'arcsallogo.png' },
+  { name: 'World Bank', logo: 'wordbanklogo.png' },
+];
 
 function PartnerLogo() {
-    const scrollRef = useRef(null);
+  // Triple the partners for seamless loop
+  const duplicatedPartners = [...partners, ...partners, ...partners];
 
-    useEffect(() => {
-      const scrollContainer = scrollRef.current;
-      if (scrollContainer) {
-        const scrollWidth = scrollContainer.scrollWidth;
-        const animationDuration = scrollWidth / 50; // Adjust speed here
-  
-        scrollContainer.style.animation = `scroll ${animationDuration}s linear infinite`;
-      }
-    }, []);
   return (
-    <div className=' '>
-      
-        <div className="container mx-auto bg-white overflow-hidden my-5 p-4">
-        <div 
-          ref={scrollRef}
-          className="flex space-x-4 infinite-scroll"
-          style={{
-            display: 'flex',
-            width: 'max-content',
-          }}
-        >
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='nigeria.png'/>
-          </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='sokotogovehouse.jpg'/>
-          </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='arcsallogo.png'/>
-          </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='wordbanklogo.png'/>
-          </div>
+    <div className="relative py-10 bg-white overflow-hidden group">
+      {/* Fade Gradients */}
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10" />
 
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='nigeria.png'/>
+      <motion.div
+        className="flex gap-16 items-center"
+        animate={{
+          x: [0, -100 * partners.length],
+        }}
+        transition={{
+          x: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: 20,
+            ease: "linear",
+          },
+        }}
+        style={{ width: 'max-content' }}
+      >
+        {duplicatedPartners.map((p, i) => (
+          <div
+            key={i}
+            className="w-48 transition-all duration-300 filter grayscale hover:grayscale-0 opacity-60 hover:opacity-100 scale-90 hover:scale-105"
+          >
+            <img
+              src={p.logo}
+              alt={p.name}
+              className="w-full h-24 object-contain"
+            />
           </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='sokotogovehouse.jpg'/>
-          </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='arcsallogo.png'/>
-          </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='wordbanklogo.png'/>
-          </div>
-
-        <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='nigeria.png'/>
-          </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='sokotogovehouse.jpg'/>
-          </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='arcsallogo.png'/>
-          </div>
-          <div className="w-40 flex-shrink-0">
-          <img className='w-full' src='wordbanklogo.png'/>
-          </div>
-
-
-        </div>
-      </div>
-      
-      <style jsx>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        .infinite-scroll {
-          display: flex;
-          width: max-content;
-        }
-      `}</style>
-      
+        ))}
+      </motion.div>
     </div>
   )
 }
 
-export default PartnerLogo
+export default PartnerLogo;

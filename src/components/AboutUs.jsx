@@ -1,92 +1,110 @@
 import React from 'react';
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-
-import { BiBulb, BiSkipNext } from 'react-icons/bi';
+import { motion } from 'framer-motion';
+import { Target, Eye, Leaf, Shield } from 'lucide-react';
 
 function AboutUs() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const features = [
+    {
+      icon: <Target className="text-primary-light" size={32} />,
+      title: "Our Mission",
+      desc: "To drive sustainable land management practices across Sokoto, reducing community vulnerability and promoting environmental stewardship through climate-resilient interventions."
+    },
+    {
+      icon: <Eye className="text-primary-light" size={32} />,
+      title: "Our Vision",
+      desc: "A future where Sokoto’s landscapes flourish with restored vitality, and communities are empowered to thrive sustainably through resilience and inclusivity."
+    }
+  ];
 
   return (
+    <section id="about" className="section-padding bg-white relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -ml-48 -mb-48" />
 
-    <div  id='about' ref={ref} className="py-16 md:py-24 lg:py-32">
-      <div className="container mx-auto px-4">
-
-    {/*    <motion.h2 
-          className="font-popins text-4xl md:text-5xl lg:text-6xl font-bold mb-12 text-center text-blue-800"
-          initial={{ opacity: 0, y: -50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-        >
-          ABOUT US
-          <p className='font-popins text-center motion-preset-slide-right  mb-5 text-base'>
-        Empowering Sokoto Through Resilient Landscape Management
-        </p>
-        </motion.h2>
-       */}
-
-
-        <div className="flex  flex-col lg:flex-row items-center gap-12 font-popins">
+      <div className="container mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            className="flex-1"
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <div className="bg-white  space-y-5 ">
-              <span className='font-popins text-gray-500 text-left mb-5 text-xl'>Welcome to (Sokoto ACReSAL)  </span>  
-                <h2 className='font-popins text-4xl font-bold'>Agro-Climatic Resilience In Semi-Arid Landscapes</h2>
+            <div className="mb-8">
+              <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">
+                Welcome to ACReSAL Sokoto
+              </span>
+              <h2 className="heading-lg mb-6">
+                Agro-Climatic Resilience In <span className="text-gradient">Semi-Arid Landscapes</span>
+              </h2>
+              <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                The ACReSAL Project (Sokoto SPMU) is a pioneering initiative dedicated to revitalizing our landscapes and uplifting our communities. We focus on sustainable landscape management as a cornerstone for growth and stability.
+              </p>
             </div>
 
-            <p className='my-2 leading-2 text-gray-500 text-1xl font-medium'>
-            The Agro-Climatic Resilience in Semi-Arid Landscapes (ACReSAL) Project, Sokoto SPMU, is a pioneering initiative dedicated to revitalizing our landscapes and uplifting our communities. With a mission rooted in sustainable landscape management, 
-            </p>
-
-           
-
-            <div className='my-2'>
-              <div className='flex flex-col  md:flex-row items-center'>
-                <div className='flex justify-center'>
-                  <BiBulb className='text-blue-700 text-4xl md:text-8xl'/>
-                </div>
-                <di className="leading-2 text-gray-600 text-1xl font-medium'">
-                  <h2 className='font-popins text-2xl md:text-3xl font-bold mb-2 text-blue-700 text-center md:text-left'>Our Mission</h2>
-                We aim to drive sustainable land management practices across Sokoto, reducing the vulnerability of our communities and promoting environmental stewardship. Our commitment is to strengthen local resilience, inclusivity, and productivity through thoughtful, climate-resilient landscape interventions.
-
-                </di>
-              </div>
-
-              <div className='flex flex-col  md:flex-row items-center mt-5'>
-                <div className='flex justify-center'>
-                  <BiSkipNext className='text-blue-700 text-4xl md:text-8xl'/>
-                </div>
-                <div className='leading-2 text-gray-600 text-1xl font-medium'>
-                  <h2 className='font-popins text-2xl md:text-3xl font-bold mb-2 text-blue-700 text-center md:text-left'>Our Vission</h2>
-                
-                  We envision a future where Sokoto’s landscapes flourish with restored vitality, and our communities are empowered to thrive sustainably. By fostering resilience, inclusivity, and eco-conscious practices, we aim to build a strong foundation for generations to come
-
-                </div>
-              </div>
-
+            <div className="space-y-8">
+              {features.map((f, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.2 }}
+                  className="flex gap-6 p-6 rounded-2xl bg-slate-50 border border-slate-100 transition-hover hover:shadow-xl hover:shadow-primary/5"
+                >
+                  <div className="shrink-0 w-16 h-16 rounded-xl bg-white shadow-sm flex items-center justify-center">
+                    {f.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">{f.title}</h3>
+                    <p className="text-slate-600 leading-relaxed">{f.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
-          
+
           <motion.div
-            className="flex-1"
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
           >
-            <img
-              className="w-full  shadow-2xl"
-              src="/images/acresalfront.jpg"
-              alt="About Us Image"
-            />
+            <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl">
+              <img
+                className="w-full h-[600px] object-cover"
+                src="/images/acresalfront.jpg"
+                alt="ACReSAL Field Work"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+            </div>
+
+            {/* Stats Overlay */}
+            <div className="absolute -bottom-8 -left-8 glass-card p-8 rounded-2xl hidden md:block z-20">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <Leaf size={24} />
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-slate-900 font-popins">50K+</div>
+                  <div className="text-sm text-slate-500 uppercase font-bold tracking-tight">Hectares Restored</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <Shield size={24} />
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-slate-900 font-popins">100%</div>
+                  <div className="text-sm text-slate-500 uppercase font-bold tracking-tight">Community Driven</div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
