@@ -4,6 +4,7 @@ import { LogIn, Mail, Lock, Loader2, ArrowLeft } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { Alert } from "@material-tailwind/react";
 import { UserStore } from "../state/store";
+import { motion } from "framer-motion";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')

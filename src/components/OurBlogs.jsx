@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import { API_URL } from '../../config';
+import { motion } from 'framer-motion';
 
 const createMarkup = (html) => {
   return { __html: DOMPurify.sanitize(html) };
