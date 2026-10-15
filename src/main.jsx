@@ -19,6 +19,10 @@ import AdminBlogListScreen from './screens/AdminBlogListScreen.jsx';
 import AdminGalleryScreen from './screens/GalleryManagement.jsx';
 import UploadImageScreen from './screens/UploadImage.jsx';
 import EditImageScreen from './screens/EditImage.jsx';
+import DocumentsPage from './screens/DocumentsPage.jsx';
+import AdminDocumentListScreen from './screens/AdminDocumentListScreen.jsx';
+import CreateDocumentScreen from './screens/CreateDocumentScreen.jsx';
+import EditDocumentScreen from './screens/EditDocumentScreen.jsx';
 
 
 
@@ -57,7 +61,12 @@ const router = createBrowserRouter([
 
   {
     path: "/createblog",
-    element:<CreateBlogScreen/>
+    element: <CreateBlogScreen/>
+  },
+
+  {
+    path: "/admin/blogs/create",
+    element: <CreateBlogScreen/>
   },
 
   {
@@ -67,6 +76,11 @@ const router = createBrowserRouter([
 
   {
     path: "/admin/blog/:slug",
+    element: <UserEditBlogScreen/>
+  },
+
+  {
+    path: "/admin/blogs/:slug/edit",
     element: <UserEditBlogScreen/>
   },
 
@@ -84,6 +98,27 @@ const router = createBrowserRouter([
     path: "/admin/gallery/:id/edit",
     element: <EditImageScreen/>
   },
+
+  {
+    path: "/documents",
+    element: <DocumentsPage/>
+  },
+
+  {
+    path: "/admin/documents",
+    element: <AdminDocumentListScreen/>
+  },
+
+  {
+    path: "/admin/documents/create",
+    element: <CreateDocumentScreen/>
+  },
+
+  {
+    path: "/admin/documents/:id/edit",
+    element: <EditDocumentScreen/>
+  },
+
 
 
 

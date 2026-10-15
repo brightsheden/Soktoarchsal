@@ -46,11 +46,17 @@ export function DrawerPlacement({openRight, closeDrawerRight}) {
         sectionId: null
       },
       {
+        path: '/documents',
+        label: 'Documents',
+        sectionId: null
+      },
+      {
         path: '/login',
         label: 'Staff Login',
         sectionId: null
       }
     ];
+
 
     return (
       <React.Fragment>

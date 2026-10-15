@@ -281,3 +281,132 @@ export const useDeleteImage = () => {
     }
   );
 };
+
+export const useDocuments = (params = {}) => {
+  const { page = 1, search = '', category = '', pageSize = 9 } = params;
+  return useQuery(
+    ['documents', page, search, category, pageSize],
+    async () => {
+      const queryParams = new URLSearchParams();
+      if (page) queryParams.append('page', page);
+      if (pageSize) queryParams.append('page_size', pageSize);
+      if (search) queryParams.append('search', search);
+      if (category && category !== 'All') queryParams.append('category', category);
+
+      const url = `${API_URL}/api/documents/?${queryParams.toString()}`;
+      const { data } = await axios.get(url);
+      return data;
+    },
+    {
+      keepPreviousData: true,
+    }
+  );
+};
+
+export const useDocumentDetails = (id) => {
+  return useQuery(
+    ['document-details', id],
+    async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/documents/${id}/`);
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response?.data?.detail || 'Failed to fetch document details');
+      }
+    },
+    {
+      enabled: !!id,
+      retry: 1,
+    }
+  );
+};
+
+export const useDocumentCategories = () => {
+  return useQuery('document-categories', async () => {
+    try {
+      const { data } = await axios.get(`${API_URL}/api/documents/categories/`);
+      return data;
+    } catch {
+      return [];
+    }
+  });
+};
+
+export const useCreateDocument = () => {
+  const queryClient = useQueryClient();
+  const token = UserStore.useState((s) => s.user?.token);
+
+  return useMutation(
+    async (formData) => {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post(`${API_URL}/api/documents/create/`, formData, config);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('documents');
+        queryClient.invalidateQueries('document-categories');
+      },
+    }
+  );
+};
+
+export const useUpdateDocument = () => {
+  const queryClient = useQueryClient();
+  const token = UserStore.useState((state) => state.user?.token);
+
+  return useMutation(
+    async ({ id, data }) => {
+      try {
+        const response = await axios.put(`${API_URL}/api/documents/update/${id}/`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        return response.data;
+      } catch (error) {
+        throw new Error(
+          error.response?.data?.message ||
+            error.response?.data?.detail ||
+            'Failed to update document'
+        );
+      }
+    },
+    {
+      onSuccess: (data, variables) => {
+        queryClient.invalidateQueries('documents');
+        queryClient.invalidateQueries(['document-details', variables.id]);
+        queryClient.invalidateQueries('document-categories');
+      },
+    }
+  );
+};
+
+export const useDeleteDocument = () => {
+  const queryClient = useQueryClient();
+  const token = UserStore.useState((s) => s.user?.token);
+
+  return useMutation(
+    async ({ id }) => {
+      const response = await axios.delete(`${API_URL}/api/documents/delete/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('documents');
+        queryClient.invalidateQueries('document-categories');
+      },
+    }
+  );
+};
+

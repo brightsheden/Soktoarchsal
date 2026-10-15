@@ -34,8 +34,10 @@ function Navbar() {
     { path: '/', label: 'Mission', sectionId: 'about' },
     { path: '/', label: 'Gallery', sectionId: 'gallery' },
     { path: '/news', label: 'News', sectionId: null },
+    { path: '/documents', label: 'Documents', sectionId: null },
     { path: '/login', label: 'Staff Portal', sectionId: null }
   ]
+
 
   return (
     <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-nav py-3' : 'bg-transparent py-5'

@@ -19,8 +19,10 @@ const Footer = () => {
     { href: '/#about', label: 'About Us' },
     { href: '/#gallery', label: 'Our Gallery' },
     { href: '/news', label: 'News & Updates' },
+    { href: '/documents', label: 'Documents & Downloads' },
     { href: '/login', label: 'Staff Portal' }
   ];
+
 
   return (
     <footer className="bg-slate-900 text-slate-300 pt-20 pb-10 overflow-hidden relative">
